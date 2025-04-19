@@ -1160,6 +1160,9 @@ def show_moradok_quiz():
     # Initialize all required session state variables
     if "moradok_answers" not in st.session_state:
         st.session_state.moradok_answers = []
+    elif isinstance(st.session_state.moradok_answers, dict):
+        st.session_state.moradok_answers = []
+    
     if "moradok_current_question" not in st.session_state:
         st.session_state.moradok_current_question = 0
     if "moradok_completed" not in st.session_state:
@@ -1606,6 +1609,18 @@ def show_quiz_selection():
     st.title("🧩 ยินดีต้อนรับสู่แพลตฟอร์ม Moradok")
     st.write("เลือกแบบทดสอบที่คุณต้องการทำ:")
     
+    # Reset all session state variables
+    st.session_state.moradok_answers = []
+    st.session_state.moradok_current_question = 0
+    st.session_state.moradok_completed = False
+    st.session_state.show_explanation = False
+    st.session_state.quiz_completed = False
+    st.session_state.current_question = 0
+    st.session_state.answers = []
+    st.session_state.results = {}
+    st.session_state.user_profile = {}
+    st.session_state.question_order = []
+    
     col1, col2 = st.columns(2)
     
     with col1:
@@ -1617,9 +1632,6 @@ def show_quiz_selection():
         """, unsafe_allow_html=True)
         if st.button("เริ่มทำแบบทดสอบ Moradok", key="moradok_quiz"):
             st.session_state.quiz_selection = "moradok"
-            st.session_state.moradok_completed = False
-            st.session_state.moradok_current_question = 0
-            st.session_state.moradok_answers = []
             st.rerun()
     
     with col2:
@@ -1631,12 +1643,6 @@ def show_quiz_selection():
         """, unsafe_allow_html=True)
         if st.button("เริ่มทำแบบทดสอบบุคลิกภาพ", key="personality_quiz"):
             st.session_state.quiz_selection = "personality"
-            st.session_state.quiz_completed = False
-            st.session_state.current_question = 0
-            st.session_state.answers = []
-            st.session_state.results = {}
-            st.session_state.user_profile = {}
-            st.session_state.question_order = []
             st.rerun()
 
 # ฟังก์ชันหลัก
