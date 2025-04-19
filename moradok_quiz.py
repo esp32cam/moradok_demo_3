@@ -488,7 +488,7 @@ questions_pool = [
 # ชุดบุคลิกภาพทางธุรกิจที่ซับซ้อนมากขึ้น
 business_personalities = {
     "Strategic Thinker": {
-        "color": "blue",
+        "color": "#3498db",  # blue
         "thai_name": "นักคิดเชิงกลยุทธ์",
         "description": "คิดอย่างเป็นระบบ วางแผนระยะยาว และสามารถมองเห็นภาพรวมได้ดี",
         "strengths": [
@@ -506,7 +506,7 @@ business_personalities = {
         }
     },
     "Visionary Creator": {
-        "color": "purple",
+        "color": "#9b59b6",  # purple
         "thai_name": "ผู้สร้างวิสัยทัศน์",
         "description": "มองเห็นอนาคตที่คนอื่นยังมองไม่เห็น สร้างสรรค์และกล้าคิดต่าง",
         "strengths": [
@@ -524,7 +524,7 @@ business_personalities = {
         }
     },
     "Relationship Builder": {
-        "color": "green",
+        "color": "#2ecc71",  # green
         "thai_name": "ผู้สร้างความสัมพันธ์",
         "description": "สร้างเครือข่ายที่แข็งแกร่งและความสัมพันธ์ที่ยั่งยืนกับลูกค้าและพันธมิตร",
         "strengths": [
@@ -542,7 +542,7 @@ business_personalities = {
         }
     },
     "Data-Driven Marketer": {
-        "color": "orange",
+        "color": "#e67e22",  # orange
         "thai_name": "นักการตลาดที่ขับเคลื่อนด้วยข้อมูล",
         "description": "ใช้ข้อมูลและเมตริกในการตัดสินใจทางการตลาดอย่างมีประสิทธิภาพ",
         "strengths": [
@@ -560,7 +560,7 @@ business_personalities = {
         }
     },
     "Agile Experimenter": {
-        "color": "red",
+        "color": "#e74c3c",  # red
         "thai_name": "นักทดลองที่คล่องตัว",
         "description": "ปรับตัวเร็ว ทดลองแนวทางใหม่ และเรียนรู้จากความล้มเหลวอย่างรวดเร็ว",
         "strengths": [
@@ -578,7 +578,7 @@ business_personalities = {
         }
     },
     "Brand Architect": {
-        "color": "teal",
+        "color": "#1abc9c",  # teal
         "thai_name": "สถาปนิกแบรนด์",
         "description": "สร้างและพัฒนาตัวตนแบรนด์ที่แข็งแกร่งและเป็นเอกลักษณ์",
         "strengths": [
@@ -596,7 +596,7 @@ business_personalities = {
         }
     },
     "Community Catalyst": {
-        "color": "pink",
+        "color": "#ff9ff3",  # pink
         "thai_name": "ผู้จุดประกายชุมชน",
         "description": "สร้างและดูแลชุมชนที่แข็งแกร่ง กระตุ้นการมีส่วนร่วมและการเติบโตร่วมกัน",
         "strengths": [
@@ -614,7 +614,7 @@ business_personalities = {
         }
     },
     "Innovation Leader": {
-        "color": "indigo",
+        "color": "#5f27cd",  # indigo
         "thai_name": "ผู้นำด้านนวัตกรรม",
         "description": "นำการเปลี่ยนแปลงและสร้างสรรค์นวัตกรรมใหม่ๆ อย่างต่อเนื่อง",
         "strengths": [
@@ -632,7 +632,7 @@ business_personalities = {
         }
     },
     "Growth Hacker": {
-        "color": "amber",
+        "color": "#feca57",  # amber
         "thai_name": "นักเติบโตแบบไว",
         "description": "ใช้กลยุทธ์สร้างสรรค์เพื่อเร่งการเติบโตและขยายธุรกิจอย่างรวดเร็ว",
         "strengths": [
@@ -650,7 +650,7 @@ business_personalities = {
         }
     },
     "Sustainability Champion": {
-        "color": "emerald",
+        "color": "#2ecc71",  # emerald
         "thai_name": "ผู้ขับเคลื่อนความยั่งยืน",
         "description": "มุ่งเน้นการสร้างธุรกิจที่ยั่งยืนทั้งด้านเศรษฐกิจ สังคม และสิ่งแวดล้อม",
         "strengths": [
@@ -668,7 +668,7 @@ business_personalities = {
         }
     },
     "Digital Transformer": {
-        "color": "cyan",
+        "color": "#00cec9",  # cyan
         "thai_name": "ผู้เปลี่ยนแปลงสู่ดิจิทัล",
         "description": "นำเทคโนโลยีและดิจิทัลมาปรับปรุงและเปลี่ยนแปลงธุรกิจ",
         "strengths": [
@@ -686,7 +686,7 @@ business_personalities = {
         }
     },
     "Customer Experience Designer": {
-        "color": "rose",
+        "color": "#ff6b6b",  # rose
         "thai_name": "นักออกแบบประสบการณ์ลูกค้า",
         "description": "สร้างประสบการณ์ที่ยอดเยี่ยมให้กับลูกค้าในทุกจุดสัมผัส",
         "strengths": [
@@ -1339,110 +1339,120 @@ def show_results(scores: Dict[str, float], personality: Dict):
     """Display quiz results with enhanced LLM analysis and Moradok matching"""
     st.title("ผลการประเมินบุคลิกภาพทางธุรกิจ")
     
-    # Display personality type
-    st.markdown(f"""
-    <div class="result-card" style="border-color: {personality['color']};">
-        <h2>บุคลิกภาพทางธุรกิจของคุณคือ</h2>
-        <h3 style="color: {personality['color']};">{personality['thai_name']}</h3>
-        <p>{personality['description']}</p>
-    </div>
-    """, unsafe_allow_html=True)
+    # Create two columns for personality info and radar chart
+    col1, col2 = st.columns([1, 1])
     
-    # Display strengths
-    st.markdown("""
-    <div class="result-card">
-        <h3>จุดแข็งของคุณ</h3>
-        <ul>
-    """, unsafe_allow_html=True)
-    for strength in personality['strengths']:
-        st.markdown(f"<li>{strength}</li>", unsafe_allow_html=True)
-    st.markdown("</ul></div>", unsafe_allow_html=True)
-    
-    # Create radar chart for dimension scores
-    st.markdown("""
-    <div class="result-card">
-        <h3>ผลการประเมินในแต่ละมิติ</h3>
-    """, unsafe_allow_html=True)
-    
-    # Prepare data for radar chart
-    dimensions = list(scores.keys())
-    scores_values = [scores[dim] * 100 for dim in dimensions]  # Convert to percentage
-    
-    # Create radar chart
-    fig = go.Figure()
-    
-    fig.add_trace(go.Scatterpolar(
-        r=scores_values,
-        theta=dimensions,
-        fill='toself',
-        name='คะแนนของคุณ',
-        line_color=personality['color']
-    ))
-    
-    fig.update_layout(
-        polar=dict(
-            radialaxis=dict(
-                visible=True,
-                range=[0, 100],
-                tickfont=dict(size=12),
-                tickangle=0
-            ),
-            angularaxis=dict(
-                tickfont=dict(size=14)
-            )
-        ),
-        showlegend=False,
-        height=500,
-        margin=dict(l=50, r=50, b=50, t=50, pad=4),
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)'
-    )
-    
-    st.plotly_chart(fig, use_container_width=True)
-    
-    # Display detailed scores and LLM analysis for each dimension
-    for dimension, score in scores.items():
+    with col1:
+        # Display personality type
         st.markdown(f"""
-        <div class="dimensional-highlight">
-            <h4>{dimension}</h4>
-            <div class="score-bar">
-                <div class="score-fill" style="width: {score * 100}%; background-color: {personality['color']};"></div>
-                <span class="score-text">{score:.2f}</span>
-            </div>
+        <div class="result-card" style="border-color: {personality['color']};">
+            <h2>บุคลิกภาพทางธุรกิจของคุณคือ</h2>
+            <h3 style="color: {personality['color']};">{personality['thai_name']}</h3>
+            <p>{personality['description']}</p>
         </div>
         """, unsafe_allow_html=True)
         
-        # Add LLM analysis for each dimension
-        llm_analysis = analyze_dimension_with_llm(dimension, score, personality)
-        if llm_analysis:
+        # Display strengths
+        st.markdown("""
+        <div class="result-card">
+            <h3>จุดแข็งของคุณ</h3>
+            <ul>
+        """, unsafe_allow_html=True)
+        for strength in personality['strengths']:
+            st.markdown(f"<li>{strength}</li>", unsafe_allow_html=True)
+        st.markdown("</ul></div>", unsafe_allow_html=True)
+        
+        # Add overall personality analysis from LLM
+        llm_personality_analysis = analyze_personality_with_llm(personality, scores)
+        if llm_personality_analysis:
             st.markdown(f"""
-            <div class="llm-insight">
-                <h4>การวิเคราะห์เชิงลึก</h4>
-                <p>{llm_analysis}</p>
+            <div class="result-card">
+                <h3>การวิเคราะห์บุคลิกภาพเชิงลึก</h3>
+                <p>{llm_personality_analysis}</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Add Moradok solution matching
+        moradok_matching = match_moradok_solutions(personality, scores)
+        if moradok_matching:
+            st.markdown(f"""
+            <div class="result-card" style="border-color: #4CAF50;">
+                <h3>🎯 โซลูชัน Moradok ที่เหมาะกับคุณ</h3>
+                <p>{moradok_matching}</p>
             </div>
             """, unsafe_allow_html=True)
     
-    st.markdown("</div>", unsafe_allow_html=True)
-    
-    # Add overall personality analysis from LLM
-    llm_personality_analysis = analyze_personality_with_llm(personality, scores)
-    if llm_personality_analysis:
-        st.markdown(f"""
+    with col2:
+        # Create radar chart for dimension scores
+        st.markdown("""
         <div class="result-card">
-            <h3>การวิเคราะห์บุคลิกภาพเชิงลึก</h3>
-            <p>{llm_personality_analysis}</p>
-        </div>
+            <h3>ผลการประเมินในแต่ละมิติ</h3>
         """, unsafe_allow_html=True)
-    
-    # Add Moradok solution matching
-    moradok_matching = match_moradok_solutions(personality, scores)
-    if moradok_matching:
-        st.markdown(f"""
-        <div class="result-card" style="border-color: #4CAF50;">
-            <h3>🎯 โซลูชัน Moradok ที่เหมาะกับคุณ</h3>
-            <p>{moradok_matching}</p>
-        </div>
+        
+        # Prepare data for radar chart
+        dimensions = list(scores.keys())
+        scores_values = [scores[dim] * 100 for dim in dimensions]  # Convert to percentage
+        
+        # Create radar chart
+        fig = go.Figure()
+        
+        fig.add_trace(go.Scatterpolar(
+            r=scores_values,
+            theta=dimensions,
+            fill='toself',
+            name='คะแนนของคุณ',
+            line_color=personality['color']
+        ))
+        
+        fig.update_layout(
+            polar=dict(
+                radialaxis=dict(
+                    visible=True,
+                    range=[0, 100],
+                    tickfont=dict(size=12),
+                    tickangle=0
+                ),
+                angularaxis=dict(
+                    tickfont=dict(size=14)
+                )
+            ),
+            showlegend=False,
+            height=400,
+            margin=dict(l=50, r=50, b=50, t=50, pad=4),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)'
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
+        
+        # Display detailed scores and LLM analysis for each dimension
+        st.markdown("""
+        <div class="result-card">
+            <h3>การวิเคราะห์เชิงลึกในแต่ละมิติ</h3>
         """, unsafe_allow_html=True)
+        
+        for dimension, score in scores.items():
+            st.markdown(f"""
+            <div class="dimensional-highlight">
+                <h4>{dimension}</h4>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: {score * 100}%; background-color: {personality['color']};"></div>
+                    <span class="score-text">{score:.2f}</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Add LLM analysis for each dimension
+            llm_analysis = analyze_dimension_with_llm(dimension, score, personality)
+            if llm_analysis:
+                st.markdown(f"""
+                <div class="llm-insight">
+                    <h4>การวิเคราะห์เชิงลึก</h4>
+                    <p>{llm_analysis}</p>
+                </div>
+                """, unsafe_allow_html=True)
+        
+        st.markdown("</div>", unsafe_allow_html=True)
     
     # Add navigation buttons
     st.markdown("""
