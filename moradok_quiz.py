@@ -857,29 +857,56 @@ def analyze_dimension_with_llm(dimension_name: str, score: float, personality: D
         if not st.session_state.get('api_key'):
             # Fallback analysis when no API key is available
             fallback_analysis = {
-                "Marketing Performance": "คุณมีความสามารถในการวัดผลและติดตามประสิทธิภาพทางการตลาดในระดับปานกลาง ควรเน้นการพัฒนาระบบการวัดผลและการวิเคราะห์ข้อมูลให้ละเอียดขึ้น",
-                "Identity Uniqueness": "คุณมีเอกลักษณ์และความแตกต่างในระดับที่ดี ควรพัฒนาต่อยอดจุดแข็งนี้ให้เป็นข้อได้เปรียบทางการแข่งขัน",
-                "Competitive Advantage": "คุณมีศักยภาพในการสร้างความได้เปรียบทางการแข่งขันในระดับปานกลาง ควรศึกษาและพัฒนาจุดแข็งที่แตกต่างจากคู่แข่ง",
-                "Networking Capability": "คุณมีศักยภาพในการสร้างเครือข่ายที่ยังสามารถพัฒนาได้อีก ควรเพิ่มการมีส่วนร่วมในกิจกรรมเครือข่ายและสร้างความสัมพันธ์ที่ยั่งยืน",
-                "Entrepreneurial Marketing": "คุณมีความสามารถในการทำการตลาดแบบผู้ประกอบการในระดับปานกลาง ควรพัฒนาทักษะการมองเห็นโอกาสและการทดลองแนวทางใหม่ๆ"
+                "Marketing Performance": f"""
+                การวิเคราะห์ประสิทธิภาพการตลาด:
+                - คะแนน {score:.2f} แสดงถึงความสามารถในการวัดผลและติดตามประสิทธิภาพทางการตลาด
+                - จุดแข็ง: {personality['strengths'][0]}
+                - ข้อเสนอแนะ: พัฒนาระบบการวัดผลและการวิเคราะห์ข้อมูลให้ละเอียดขึ้น
+                """,
+                "Identity Uniqueness": f"""
+                การวิเคราะห์เอกลักษณ์:
+                - คะแนน {score:.2f} แสดงถึงความโดดเด่นและความแตกต่างของคุณ
+                - จุดแข็ง: {personality['strengths'][1]}
+                - ข้อเสนอแนะ: พัฒนาต่อยอดจุดแข็งให้เป็นข้อได้เปรียบทางการแข่งขัน
+                """,
+                "Competitive Advantage": f"""
+                การวิเคราะห์ความได้เปรียบทางการแข่งขัน:
+                - คะแนน {score:.2f} แสดงถึงศักยภาพในการสร้างความได้เปรียบ
+                - จุดแข็ง: {personality['strengths'][2]}
+                - ข้อเสนอแนะ: ศึกษาและพัฒนาจุดแข็งที่แตกต่างจากคู่แข่ง
+                """,
+                "Networking Capability": f"""
+                การวิเคราะห์ความสามารถในการสร้างเครือข่าย:
+                - คะแนน {score:.2f} แสดงถึงศักยภาพในการสร้างเครือข่าย
+                - จุดแข็ง: {personality['strengths'][3]}
+                - ข้อเสนอแนะ: เพิ่มการมีส่วนร่วมในกิจกรรมเครือข่าย
+                """,
+                "Entrepreneurial Marketing": f"""
+                การวิเคราะห์การตลาดแบบผู้ประกอบการ:
+                - คะแนน {score:.2f} แสดงถึงความสามารถในการทำการตลาดแบบผู้ประกอบการ
+                - จุดแข็ง: {personality['strengths'][0]}
+                - ข้อเสนอแนะ: พัฒนาทักษะการมองเห็นโอกาสและการทดลองแนวทางใหม่ๆ
+                """
             }
             return fallback_analysis.get(dimension_name, "")
             
         client = groq.Groq(api_key=st.session_state.api_key)
         
         prompt = f"""
-        You are a business strategy expert analyzing a business personality assessment.
+        You are a business strategy expert analyzing a specific dimension of a business personality assessment.
         Dimension: {dimension_name}
         Score: {score}
         Personality Type: {personality['thai_name']} ({personality['description']})
+        Strengths: {', '.join(personality['strengths'])}
         
-        Please provide:
-        1. A brief analysis of what this score means in the context of this personality type
-        2. 2-3 specific strengths this combination suggests
-        3. 1-2 potential areas for growth
-        4. A practical recommendation for leveraging this dimension
+        Please provide a detailed analysis that includes:
+        1. What this specific score means for this dimension
+        2. How this dimension relates to the personality type's strengths
+        3. Specific opportunities for improvement in this dimension
+        4. Practical recommendations for leveraging this dimension in business
         
-        Keep the response concise and actionable.
+        Focus on unique insights specific to this dimension and personality combination.
+        Keep the response concise but detailed.
         """
         
         response = client.chat.completions.create(
@@ -900,33 +927,40 @@ def analyze_personality_with_llm(personality: Dict, scores: Dict[str, float]) ->
         if not st.session_state.get('api_key'):
             # Fallback analysis when no API key is available
             return f"""
-            บุคลิกภาพ {personality['thai_name']} ของคุณแสดงถึงความสามารถในการ {personality['description']}
+            การวิเคราะห์บุคลิกภาพ {personality['thai_name']}:
             
-            จุดแข็งหลักของคุณ:
+            1. จุดแข็งหลัก:
             - {personality['strengths'][0]}
             - {personality['strengths'][1]}
             - {personality['strengths'][2]}
             
-            ข้อเสนอแนะในการพัฒนา:
-            1. พัฒนาทักษะการสร้างเครือข่ายและการสื่อสาร
-            2. เพิ่มความเข้าใจในตลาดและลูกค้า
-            3. พัฒนาความสามารถในการปรับตัวและการเรียนรู้
+            2. โอกาสทางธุรกิจ:
+            - พัฒนาทักษะการสร้างเครือข่าย
+            - เพิ่มความเข้าใจในตลาดและลูกค้า
+            - พัฒนาความสามารถในการปรับตัว
+            
+            3. ข้อเสนอแนะในการพัฒนา:
+            - ใช้จุดแข็งในการสร้างความแตกต่าง
+            - พัฒนาทักษะที่จำเป็นสำหรับการเติบโต
+            - สร้างเครือข่ายที่แข็งแกร่ง
             """
             
         client = groq.Groq(api_key=st.session_state.api_key)
         
         prompt = f"""
-        You are a business strategy expert analyzing a business personality assessment.
+        You are a business strategy expert analyzing a complete business personality profile.
         Personality Type: {personality['thai_name']} ({personality['description']})
+        Strengths: {', '.join(personality['strengths'])}
         Dimension Scores: {json.dumps(scores, indent=2)}
         
-        Please provide:
-        1. A comprehensive analysis of how this personality type's strengths align with their dimension scores
-        2. 2-3 unique business opportunities this combination suggests
+        Please provide a comprehensive analysis that includes:
+        1. How the personality type's strengths interact with each dimension score
+        2. Unique business opportunities this specific combination suggests
         3. Potential challenges and how to address them
         4. Specific recommendations for business growth and development
         
-        Keep the response focused on practical business applications.
+        Focus on the unique combination of this personality type and the specific dimension scores.
+        Provide actionable insights that are specific to this profile.
         """
         
         response = client.chat.completions.create(
@@ -943,11 +977,11 @@ def analyze_personality_with_llm(personality: Dict, scores: Dict[str, float]) ->
 
 def show_results(scores: Dict[str, float], personality: Dict):
     """Display quiz results with enhanced LLM analysis"""
-    st.title("ผลการประเมินบุคลิกภาพทางธุรกิจ")
+    st.title("🎉 ผลลัพธ์แบบทดสอบบุคลิกภาพทางธุรกิจ")
     
     # Display personality type
     st.markdown(f"""
-    <div class="result-card" style="border-color: {personality['color']};">
+    <div class="result-card">
         <h2>บุคลิกภาพทางธุรกิจของคุณคือ</h2>
         <h3 style="color: {personality['color']};">{personality['thai_name']}</h3>
         <p>{personality['description']}</p>
@@ -957,71 +991,75 @@ def show_results(scores: Dict[str, float], personality: Dict):
     # Display strengths
     st.markdown("""
     <div class="result-card">
-        <h3>จุดแข็งของคุณ</h3>
-        <ul>
+        <h3>จุดแข็งของคุณ:</h3>
+    </div>
     """, unsafe_allow_html=True)
-    for strength in personality['strengths']:
-        st.markdown(f"<li>{strength}</li>", unsafe_allow_html=True)
-    st.markdown("</ul></div>", unsafe_allow_html=True)
     
-    # Display dimension scores with LLM analysis
+    for strength in personality['strengths']:
+        st.markdown(f"""
+        <div class="strength-item">
+            <span class="strength-icon">✓</span>
+            <span>{strength}</span>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Display dimension scores
     st.markdown("""
     <div class="result-card">
-        <h3>ผลการประเมินในแต่ละมิติ</h3>
+        <h3>คะแนนในแต่ละมิติ:</h3>
+    </div>
     """, unsafe_allow_html=True)
     
     for dimension, score in scores.items():
         st.markdown(f"""
-        <div class="dimensional-highlight">
-            <h4>{dimension}</h4>
+        <div class="dimension-score">
+            <div class="dimension-name">{dimension}</div>
             <div class="score-bar">
-                <div class="score-fill" style="width: {score * 100}%; background-color: {personality['color']};"></div>
-                <span class="score-text">{score:.2f}</span>
+                <div class="score-fill" style="width: {score*100}%; background-color: {personality['color']};"></div>
             </div>
+            <div class="score-value">{score:.2f}</div>
         </div>
         """, unsafe_allow_html=True)
         
         # Add LLM analysis for each dimension
-        llm_analysis = analyze_dimension_with_llm(dimension, score, personality)
-        if llm_analysis:
+        analysis = analyze_dimension_with_llm(dimension, score, personality)
+        if analysis:
             st.markdown(f"""
-            <div class="llm-insight">
-                <h4>การวิเคราะห์เชิงลึก</h4>
-                <p>{llm_analysis}</p>
+            <div class="analysis-card">
+                <h4>การวิเคราะห์มิติ {dimension}:</h4>
+                <p>{analysis}</p>
             </div>
             """, unsafe_allow_html=True)
     
-    st.markdown("</div>", unsafe_allow_html=True)
-    
-    # Add overall personality analysis from LLM
-    llm_personality_analysis = analyze_personality_with_llm(personality, scores)
-    if llm_personality_analysis:
+    # Add overall personality analysis
+    personality_analysis = analyze_personality_with_llm(personality, scores)
+    if personality_analysis:
         st.markdown(f"""
-        <div class="result-card">
-            <h3>การวิเคราะห์บุคลิกภาพเชิงลึก</h3>
-            <p>{llm_personality_analysis}</p>
+        <div class="analysis-card">
+            <h4>การวิเคราะห์บุคลิกภาพโดยรวม:</h4>
+            <p>{personality_analysis}</p>
         </div>
         """, unsafe_allow_html=True)
     
-    # Add CSS for new elements
+    # Add Moradok solution matching
+    moradok_solutions = match_moradok_solutions(personality, scores)
+    if moradok_solutions:
+        st.markdown(f"""
+        <div class="analysis-card">
+            <h4>โซลูชัน Moradok ที่เหมาะกับคุณ:</h4>
+            <p>{moradok_solutions}</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Add navigation buttons
     st.markdown("""
-    <style>
-    .llm-insight {
-        background-color: #f8f9fa;
-        padding: 15px;
-        border-radius: 8px;
-        margin: 10px 0;
-        border-left: 4px solid #6c757d;
-    }
-    .llm-insight h4 {
-        color: #495057;
-        margin-top: 0;
-    }
-    .llm-insight p {
-        color: #212529;
-        line-height: 1.6;
-    }
-    </style>
+    <div class="navigation-buttons">
+        <div class="button-container">
+            <button class="nav-button" onclick="window.location.href='/'">กลับไปหน้าหลัก</button>
+            <button class="nav-button" onclick="window.location.href='/moradok_quiz'">กลับไป Moradok Quiz</button>
+            <button class="nav-button" onclick="window.location.href='/personality_quiz'">ทำแบบทดสอบใหม่</button>
+        </div>
+    </div>
     """, unsafe_allow_html=True)
 
 # ฟังก์ชันแสดงผลลัพธ์แบบทดสอบบุคลิกภาพ
@@ -1337,7 +1375,7 @@ def show_quiz():
 
 def show_results(scores: Dict[str, float], personality: Dict):
     """Display quiz results with enhanced LLM analysis and Moradok matching"""
-    st.title("ผลการประเมินบุคลิกภาพทางธุรกิจ")
+    st.title("🎉 ผลลัพธ์แบบทดสอบบุคลิกภาพทางธุรกิจ")
     
     # Create two columns for personality info and radar chart
     col1, col2 = st.columns([1, 1])
@@ -1369,9 +1407,9 @@ def show_results(scores: Dict[str, float], personality: Dict):
             <div class="result-card">
                 <h3>การวิเคราะห์บุคลิกภาพเชิงลึก</h3>
                 <p>{llm_personality_analysis}</p>
-            </div>
-            """, unsafe_allow_html=True)
-        
+        </div>
+        """, unsafe_allow_html=True)
+    
         # Add Moradok solution matching
         moradok_matching = match_moradok_solutions(personality, scores)
         if moradok_matching:
