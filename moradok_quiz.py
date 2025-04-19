@@ -1444,9 +1444,75 @@ def show_results(scores: Dict[str, float], personality: Dict):
         </div>
         """, unsafe_allow_html=True)
     
+    # Add navigation buttons
+    st.markdown("""
+    <div class="navigation-buttons">
+        <div class="button-container">
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        if st.button("กลับไปหน้าหลัก", key="back_to_main"):
+            st.session_state.quiz_selection = None
+            st.session_state.personality_answers = {}
+            st.session_state.personality_current_question = 0
+            st.session_state.personality_completed = False
+            st.rerun()
+    
+    with col2:
+        if st.button("กลับไป Moradok Quiz", key="back_to_moradok"):
+            st.session_state.quiz_selection = "moradok"
+            st.session_state.moradok_answers = {}
+            st.session_state.moradok_current_question = 0
+            st.session_state.moradok_completed = False
+            st.rerun()
+    
+    with col3:
+        if st.button("ทำแบบทดสอบใหม่", key="retake_quiz"):
+            st.session_state.personality_answers = {}
+            st.session_state.personality_current_question = 0
+            st.session_state.personality_completed = False
+            st.rerun()
+    
+    st.markdown("""
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
     # Add CSS for new elements
     st.markdown("""
     <style>
+    .navigation-buttons {
+        margin-top: 30px;
+        text-align: center;
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    .nav-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .nav-button:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .nav-button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
     .llm-insight {
         background-color: #f8f9fa;
         padding: 15px;
